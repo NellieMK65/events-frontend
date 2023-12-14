@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
 	Button,
 	Modal,
@@ -12,7 +14,8 @@ import {
 	FormLabel,
 	Input,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import toast from 'react-hot-toast';
+
 import { BASE_URL } from '../utils';
 
 export const BookingForm = ({ isOpen, onClose, eventId, eventName }) => {
@@ -48,15 +51,21 @@ export const BookingForm = ({ isOpen, onClose, eventId, eventName }) => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(res);
+				if (res.message) {
+					// this means the operation was successful
+					toast.success(res.message, { duration: 5000 });
+				} else {
+					toast.error(res.detail, { duration: 6000 });
+				}
 				// stop loading button
 				setIsLoading(false);
 				// this will close our modal
 				onClose();
 			})
-			.catch((err) => console.log(err));
-
-		// make post request to server
+			.catch((err) => {
+				console.log(err);
+				toast.error('Error occurred. Try again later');
+			});
 	};
 
 	return (

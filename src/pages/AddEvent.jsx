@@ -14,6 +14,7 @@ import {
 	Stack,
 	Textarea,
 } from '@chakra-ui/react';
+import toast from 'react-hot-toast';
 
 import { BASE_URL } from '../utils';
 
@@ -51,8 +52,9 @@ export const AddEvent = () => {
 			body: JSON.stringify(formData),
 		})
 			.then((res) => res.json())
-			.then((data) => {
+			.then(() => {
 				// we assume the operation was a success
+				toast.success('Event created successfully', { duration: 5000 });
 
 				// reset form
 				setFormData(initialData);
@@ -61,6 +63,9 @@ export const AddEvent = () => {
 				setIsLoading(false);
 			})
 			.catch((err) => {
+				toast.error('Unknown error occurred. Try again later', {
+					duration: 6000,
+				});
 				setIsLoading(false);
 				console.log(err);
 			});
