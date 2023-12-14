@@ -1,4 +1,5 @@
 import { Box, Button, Heading, Stack, Text } from '@chakra-ui/react';
+import { formatDate } from '../utils';
 
 export const EventCard = ({
 	image,
@@ -22,7 +23,7 @@ export const EventCard = ({
 				<Stack direction={'column'} fontSize={'sm'}>
 					<Text>Kshs {price}</Text>
 					<Text>
-						{start_date} - {end_date}
+						{formatDate(start_date)} - {formatDate(end_date)}
 					</Text>
 				</Stack>
 
